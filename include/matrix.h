@@ -6,16 +6,6 @@
 #include "stdio.h"
 #include "math.h"
 
-#include <stdarg.h>
-
-#define ANSI_RESET   "\x1b[0m"
-#define ANSI_BOLD    "\x1b[1m"
-#define ANSI_DIM     "\x1b[2m"
-#define ANSI_CYAN    "\x1b[36m"
-#define ANSI_YELLOW  "\x1b[33m"
-#define ANSI_GREEN   "\x1b[32m"
-#define ANSI_RED     "\x1b[31m"
-
 typedef enum {
 	false, true
 }Boolean;
@@ -192,11 +182,5 @@ void printL_EqEX(L_EQ eq); //print a linear equation (explicited)
 void printL_EqsEX(L_EQ* eqs, int rows); //same as above but an array of equations
 
 Matrix extra_identityMatrix(int rows, int columns); //identityMatrix algorythm but allows any number of rows and columns
-
-void print_divider(void);
-
-void print_section(const char* label);
-
-void print_scalar(const char* label, const char* fmt, ...);
 
 #endif

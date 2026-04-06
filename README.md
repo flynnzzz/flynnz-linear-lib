@@ -1,10 +1,13 @@
-# [ S I M P L E | L I N E A R | L I B ]  
+# *F L Y N N Z - L \ N E A R - L \ B*
 
-> Just a learning experience, not intended for use.
+*(Mainly a learning experience, not intended for use)*
 
----
+> **Included:**
+> - Matrix (and Vector) ADT
+> - Matrix 'algebra' functions
+> - Complex matrix operations (determinant, REF, etc..)
 
-## Example of use 
+## - Example of use - 
 
 ```c
 
@@ -41,16 +44,16 @@ int main(void)
 > Expected print output:
 
 ```c
-  │  1.00   0.00  -1.00  │
+{   1.00   0.00  -1.00   }
 
-  ┌  2.00   0.00  -3.00  ┐
-  │  5.00   6.00   0.00  │
-  └  1.00   2.00   0.00  ┘
+{   2.00   0.00  -3.00   }
+{   5.00   6.00   0.00   }
+{   1.00   2.00   0.00   }
 ```
 
 ---
 
-## Documentation
+## - Documentation -
 
 ### Memory allocation
 
