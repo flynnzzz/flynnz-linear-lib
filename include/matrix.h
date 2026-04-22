@@ -1,10 +1,9 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-#define EPSILON 1e-4f
 
-#include "stdlib.h"
-#include "stdio.h"
-#include "math.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 
 typedef enum {
 	false, true
@@ -37,150 +36,103 @@ typedef struct linear_equation
 	Boolean varIsolated;
 }L_EQ;
 
-/* Float equality with tolerance */
-static int feq(float a, float b) { return fabsf(a - b) < EPSILON; }
 
-//--------------------------------------------------------------------------------------------------------------------------------
-//														 FUNCTIONS
-//--------------------------------------------------------------------------------------------------------------------------------
+// Matrices
 
-//-------------------------------------------------------MATRICES-----------------------------------------------------------------
+Matrix emptyMatrix(int rows, int columns); // Allocates the necessary space for a matrix
 
-Matrix emptyMatrix(int rows, int columns); //allocate the necessary space for a matrix
+Matrix nullMatrix(); // Returns a matrix with NULL value, 0 rows and 0 colums
 
-Matrix nullMatrix(); //matrix with NULL value, 0 rows and 0 colums
+void freeMatrix(Matrix m); // Deallocate matrix memory from heap
 
-void freeMatrix(Matrix m); //deallocate matrix memory from heap
+int printMatrix(Matrix m); // Prints matrix data on the console
 
-int printMatrix(Matrix m); //yeah
+Matrix defineMatrix(mel arr[], int rows, int columns); // Return a Matrix defined using an array
 
-Matrix defineMatrix(mel arr[], int rows, int columns); //create a Matrix using an array defined on the stack
+void matrixChangeRow(Matrix* empty, Row rowToInsert, int rowToChange); // Substitute a row with an array 
 
-void matrixChangeRow(Matrix* empty, Row rowToInsert, int rowToChange); //use arrays to add/modify rows of a matrix
-
-Matrix inputMatrix(); //allows user to create matrix from stdin
+Matrix inputMatrix(); // Create matrix from stdin
 
 Boolean sameMatrices(Matrix m1, Matrix m2);
 										
-Matrix copyMatrix(Matrix m); //returns a copy of a matrix m
+Matrix copyMatrix(Matrix m); // Returns a copy of a matrix m
 
-Matrix identityMatrix(int rows, int columns); //returns an identity matrix of a chosen size
+Matrix identityMatrix(int rows, int columns); // Returns an identity matrix of a chosen size
 
-Matrix zeroMatrix(int rows, int columns); //0 matrix of chosen size
+Matrix zeroMatrix(int rows, int columns); // Returns a matrix of a chosen size initialized to 0 in every cell 
 
-Boolean isZeroMatrix(Matrix m); //is it a zero matrix?
+Boolean isZeroMatrix(Matrix m);
 
-Matrix matrixSum(Matrix m1, Matrix m2); 
-										//matrix sum
-Matrix matrixSub(Matrix m1, Matrix m2);
+Matrix matrixSum(Matrix m1, Matrix m2); // Returns the sum matrix of two matrices
+										
+Matrix matrixSub(Matrix m1, Matrix m2); // Returns the difference matrix of two matrices
 
-Matrix matrixProd(Matrix m1, Matrix m2); //matrix-matrix multiplication
+Matrix matrixProd(Matrix m1, Matrix m2); // Returns the product matrix of two matrices
 
-Matrix baseChange(Matrix A, Matrix C); //change base
+Matrix baseChange(Matrix A, Matrix C); // Returns a matrix corresponding to matrix A in a new base defined by the matrix C
 
-int rankMatrix(Matrix m); //determines the rank of a matrix
+int rankMatrix(Matrix m); // Returns the rank of a matrix
 
 Boolean isSorted(Matrix m);
 
-void printKerMatrix(Matrix m); //raw doggin' it, im too lazy to search up the fastest algorithm, this should find all the equations that
-							   //define the kernel and print them
+void printKerMatrix(Matrix m); // Prints the null-space of a matrix on the console
 
-void fillMatrix(Matrix* m, mel n); //fill an entire matrix with a chosen element
+void fillMatrix(Matrix* m, mel n); // Fills an entire matrix with a chosen value
 							
-Matrix subMatrix(Matrix m, int rowToElim, int colToElim); //create a submatrix
+Matrix subMatrix(Matrix m, int rowToElim, int colToElim); // Returns a submatrix defined by matrix m and the rows/cols to eliminate
 
-float detMatrix(Matrix m); //returns the determinant of a matrix using REF
+float detMatrix(Matrix m); // Returns the determinant of a matrix using REF
 
-float laplaceDetMatrix(Matrix m); //determinant using recursion (less efficient)
+float laplaceDetMatrix(Matrix m); // Returns the Reterminant recursively using the laplace expansion formula
 
-Matrix rowEchelon(Matrix m); //returns a copy of m in REF
+Matrix rowEchelon(Matrix m); // Returns a copy of m in REF
 
-Matrix reducedRowEch(Matrix m); //fives a copy of m in normalized REF
+Matrix reducedRowEch(Matrix m); // Returns a copy of m in normalized REF
 
-Matrix inverseMatrix(Matrix m); //uses gauss-jordan elimination to find the inverse of a matrix
+Matrix inverseMatrix(Matrix m); //Returns the inverse of a matrix using gauss-jordan elimination
 
-int matrixSort(Matrix a[]); //sort in decreasing order
+int matrixSort(Matrix* a); // Sort matrix in decreasing order
 
 Boolean fullRank(Matrix m); 
 
-//---------------------------------------------------------VECTORS----------------------------------------------------------------
+// Vectors
 
-Vect emptyVect(int dim); //allocate the necessary space for a vector
+Vect emptyVect(int dim); // Allocates the necessary space for a vector
 
-Vect nullVect(); //null vector with size 0 and NULL value
+Vect nullVect(); // Returns a null vector with size 0 and NULL value
 
 Vect zeroVect(int dim);
 
-void freeVect(Vect v); //deallocate vector memory from heap
+void freeVect(Vect v); // Deallocates vector memory from heap
 
-int defineVect(Vect empty, float arr[], int dimArr); //use an array to define a vector
+int defineVect(Vect empty, float arr[], int dimArr); // Uses an array to define a vector
 
 Vect copyVect(Vect v);
 
 Vect vectSum(Vect v1, Vect v2);
 
-Vect scaleVect(Vect vector, mel k); //multply a vector by a scalar value
+Vect scaleVect(Vect vector, mel k); // Returns a scaled vector
 
-int printVect(Vect v); //yup
+int printVect(Vect v); // Prints a vector's contents on the console
 
-Vect linearApp(Vect v, Matrix m); //matrix-vector multiplication
+Vect linearApp(Vect v, Matrix m); // Returns the vector obtained by matrix-vector multiplication
 
-mel scalarProd(Vect v1, Vect v2); //scalar product between two vectors
+mel scalarProd(Vect v1, Vect v2); // Returns the dot product between two vectors
 
-Vect rowToVect(Matrix m, int Row);
-										//converts a row/column of a matrix into a vector
-Vect columnToVect(Matrix m, int column);
+Vect rowToVect(Matrix m, int Row); // Returns the row of a matrix as a vector
+										
+Vect columnToVect(Matrix m, int column); // Returns the column of a matrix as a column
 
-//-----------------------------------------------------------MISC-----------------------------------------------------------------
-Boolean isRowEchelon(Matrix m); //yup
 
-void exchangeRows(Row* a, Row* b); //exchange two rows
+// Misc
+Boolean isRowEchelon(Matrix m); 
 
-Boolean isTriangular(Matrix m); //check if m is triangular
+void exchangeRows(Row* a, Row* b);
 
-Boolean isZeroRow(Row r, int dim); //check if a row is zeros-only
+Boolean isTriangular(Matrix m); // Checks whether a matrix is triangular
 
-int nonZeroRows(Matrix m); //finds the number of non-zero rows
+Boolean isZeroRow(Row r, int dim); // Checks if a row is zeros-only
 
-//--------------------------------------------------------------------------------------------------------------------------------
-//													Not intended for use
-//--------------------------------------------------------------------------------------------------------------------------------
-
-Matrix rowEchDet(Matrix m, int* exchanges); //the same as rowEchelon() but it counts how many exchanges were made (for detMatrix())
-											
-Boolean GJfindPivot(int start, Matrix c, int* pivot, int* pivotR); //used in REF functions to find pivot 
-																 
-void sub_matrixAdd(Matrix* m, mel el, int* row, int* column); //adds into a matrix an element and moves forward into the matrix
-
-int MbubbleSort(Matrix v[]); 
-
-int compareRow(Row e1, Row e2, int dim); //for sorting, rows with smaller pivot indexes are "bigger"
-
-void normalizeEl(Matrix* m, int pivotR, int j, float norma); //normalize a sigle element
-
-void op_gaussJordan(Matrix* c, Matrix* inverse); //performs reducedRowEch() the first, performs the same operations on the second
-												 //used for inverseMatrix()
-void clear_input(void); //clear the buffer
-
-void delZeroRowsSorted(Matrix* sorted); //deletes zero rows (sorted matrices)
-
-int explicitVariable(L_EQ* eq); //for linear equations, makes the chosen variable (inside *eq) explicit 
-							 //e.g. id = 'a' , value =  a + 2b+ 3c , varIsolated = false -> returns id = 'a', value = -2b - 3c, varIsolated = true
-
-int rowsToEquations(Matrix m, L_EQ* equations); //converts a matrix's rows into "unexplicited" equations
-
-void rowsToEquationsEX(Matrix m, L_EQ* equations); //converts a matrix's rows into "explicited" equations
-
-Boolean isInEquations_byID(int id, L_EQ* eqs, int dim); //checks if an equation of id "j" is present in the arrary "eqs"
-
-Vect vectValue_byID(int id, L_EQ* eqs, int dim); //finds the corresponding equation by id
-
-void delRedundancyEq(L_EQ* equation, L_EQ* equations, int i, int dim); //support function to make code look prettier, not intended for user
-
-void printL_EqEX(L_EQ eq); //print a linear equation (explicited)
-
-void printL_EqsEX(L_EQ* eqs, int rows); //same as above but an array of equations
-
-Matrix extra_identityMatrix(int rows, int columns); //identityMatrix algorythm but allows any number of rows and columns
+int nonZeroRows(Matrix m); // Returns the number of non-zero rows
 
 #endif

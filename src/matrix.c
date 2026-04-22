@@ -1,5 +1,40 @@
 #include "matrix.h"
 
+Matrix rowEchDet(Matrix m, int* exchanges); // the same as rowEchelon() but it counts how many exchanges were made (for detMatrix())
+
+Boolean GJfindPivot(int start, Matrix c, int* pivot, int* pivotR); // used in REF functions to find the pivot 
+
+void sub_matrixAdd(Matrix* m, mel el, int* row, int* column); // adds into a matrix an element and moves forward into the matrix
+
+int MbubbleSort(Matrix v[]);
+
+int compareRow(Row e1, Row e2, int dim); // for sorting, rows with smaller pivot indexes are "bigger"
+
+void normalizeEl(Matrix* m, int pivotR, int j, float norma); // normalize a sigle element
+
+void op_gaussJordan(Matrix* c, Matrix* inverse); // performs reducedRowEch() the first, performs the same operations on the second
+// used for inverseMatrix()
+void clear_input(void); // clear the buffer
+
+void delZeroRowsSorted(Matrix* sorted); // deletes zero rows (sorted matrices)
+
+int explicitVariable(L_EQ* eq); // for linear equations, makes the chosen variable (inside *eq) explicit 
+// e.g. id = 'a' , value =  a + 2b+ 3c , varIsolated = false -> returns id = 'a', value = -2b - 3c, varIsolated = true
+
+int rowsToEquations(Matrix m, L_EQ* equations); // converts a matrix's rows into "unexplicited" equations
+
+void rowsToEquationsEX(Matrix m, L_EQ* equations); // converts a matrix's rows into "explicited" equations
+
+Boolean isInEquations_byID(int id, L_EQ* eqs, int dim); // checks if an equation of id "j" is present in the arrary "eqs"
+
+Vect vectValue_byID(int id, L_EQ* eqs, int dim); // finds the corresponding equation by id
+
+void delRedundancyEq(L_EQ* equation, L_EQ* equations, int i, int dim); // support function to make code look cleaner
+
+void printL_EqEX(L_EQ eq); // print a linear equation (explicited)
+
+void printL_EqsEX(L_EQ* eqs, int rows); // same as above but an array of equations
+
 Boolean sameMatrices(Matrix m1, Matrix m2)
 {
 	if (m1.rows != m2.rows || m1.cols != m2.cols)
@@ -11,7 +46,7 @@ Boolean sameMatrices(Matrix m1, Matrix m2)
 		{
 			for (j = 0; j < m1.cols; j++)
 			{
-				if (!feq(m1.data[j][i], m2.data[j][i]))
+				if (!m1.data[j][i] != m2.data[j][i])
 					return false;
 			}
 		}
@@ -615,24 +650,6 @@ Matrix identityMatrix(int rows, int columns)
 	return identity;
 }
 
-Matrix extra_identityMatrix(int rows, int columns)
-{
-	Matrix identity = emptyMatrix(rows, columns);
-	int i, j;
-
-	for (i = 0; i < identity.rows; i++)
-	{
-		for (j = 0; j < identity.cols; j++)
-		{
-			if (i != j)
-				identity.data[i][j] = 0;
-			else
-				identity.data[i][j] = 1;
-		}
-	}
-	return identity;
-}
-
 Matrix inverseMatrix(Matrix m)
 {
 	Matrix c, inverse;
@@ -739,7 +756,7 @@ int MbubbleSort(Matrix v[])
 	return exchanged;
 }
 
-int matrixSort(Matrix a[])
+int matrixSort(Matrix* a)
 {
 	int exchanged = MbubbleSort(a);
 	return exchanged;
@@ -1113,3 +1130,5 @@ Boolean fullRank(Matrix m)
 	}
 	return fullR;
 }
+
+
