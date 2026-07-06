@@ -1,10 +1,10 @@
 # *F L Y N N Z - L \ N E A R - L \ B*
 
-*(Mainly a learning experience, not intended for use)*
+*(Mainly a learning experience and my first real project, not intended for use)*
 
 > **Included:**
 > - Matrix (and Vector) ADT
-> - Matrix 'algebra' functions
+> - Matrix linear algebra functions
 > - Complex matrix operations (determinant, REF, etc..)
 
 ## - Example of use - 
@@ -53,7 +53,7 @@ int main(void)
 
 ---
 
-## - Documentation -
+## - Docs -
 
 ### Memory allocation
 
